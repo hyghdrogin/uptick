@@ -1,0 +1,10 @@
+package-lock.json
+
+# Dependency directories
+node_modules/
+
+# dotenv environment variables file
+.env
+
+# Compiled Javascript folder
+dist
