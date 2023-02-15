@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import config from "./configuration";
 import requestLogger from "./utilities/requestLogger";
+import database from "./configuration/databaseConfiguration";
 
 const app = express();
 const port = config.PORT || 3000;
@@ -23,6 +24,9 @@ app.use((req, res) => res.status(404).send({
 }));
 
 (async () => {
+  console.log("Awaiting Database Connection...");
+  await database.connect();
+  console.log("Database connected successfully!!!");
   app.listen(port, async () => {
     console.log(
       `${config.APP_NAME} API listening on port: ${port}`

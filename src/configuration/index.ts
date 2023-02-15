@@ -8,7 +8,6 @@ const config = {
   MONGO_URL: process.env.MONGO_URL as string,
 };
 
-// Check if a key or value is missing in the configuration file
 const incompleteEntry = Object.entries(config)
   .map(([key, value]) => [key, !!value])
   .filter(([, value]) => !value)
