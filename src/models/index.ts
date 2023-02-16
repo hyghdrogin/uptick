@@ -1,7 +1,8 @@
 import User from "./userModel";
+import Note from "./noteModel";
 
 const models = {
-  User
+  User, Note
 };
 
 export default models;

@@ -27,3 +27,16 @@ export interface LoginInterface {
   password: string
   remember: boolean
 }
+
+export interface NoteUpdateInterface {
+  heading?: string
+  noteField: string
+}
+
+export interface NoteInterface extends NoteUpdateInterface {
+  _id?: string
+  owner: string
+  active?: boolean
+  createdAt?: Date
+  updatedAt?: Date
+}
