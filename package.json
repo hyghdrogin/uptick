@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/app.js",
-    "dev": "ts-node-dev src/app.ts",
+    "start": "node dist/app.js",
+    "dev": "npm run build && ts-node-dev src/app.ts",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint --fix src/**/*.ts"
+    "lint:fix": "eslint --fix src/**/*.ts",
+    "postinstall": "tsc"
   },
   "keywords": [],
   "author": "",
