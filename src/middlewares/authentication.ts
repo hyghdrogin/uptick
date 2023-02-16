@@ -19,7 +19,6 @@ export default class Authentication {
       const headerSplit = authenticationHeader.split(" ");
       if (/^Bearer$/i.test(headerSplit[0])) {
         const decodeToken: any = await jwt.verify(headerSplit[1], config.JWT);
-        console.log(headerSplit[1]);
         const user = await models.User.findById(decodeToken._id);
         if (!user) {
           return errorResponse(res, 404, "User not found");

@@ -5,8 +5,7 @@ const noteSchema = new Schema(
   {
     owner: { type: String },
     heading: { type: String },
-    noteField: { type: String },
-    active: { type: Boolean, default: true }
+    noteField: { type: String }
   },
   { timestamps: true }
 );
