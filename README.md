@@ -2,7 +2,7 @@
 NootBuk is a note app api.
 
 ## Documentation
-A detailed documentation of the api can be found here: [https://documenter.getpostman.com/view/21130368/2s93CGQF2W]API Documentation 
+A detailed documentation of the api can be found here: [https://documenter.getpostman.com/view/21130368/2s93CGQF2W] API Documentation 
 
 - Run Project Locally
 
