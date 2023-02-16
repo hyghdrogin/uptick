@@ -6,6 +6,7 @@ import config from "./configuration";
 import requestLogger from "./utilities/requestLogger";
 import database from "./configuration/databaseConfiguration";
 import { GeneralRequest } from "./utilities/interfaces";
+import router from "./routes";
 
 const app = express();
 const port = config.PORT || 3000;
@@ -20,6 +21,7 @@ declare global {
 }
 
 app.use(requestLogger);
+app.use("/api", router);
 
 // GET request to homepage
 app.get("/", (req, res) => {

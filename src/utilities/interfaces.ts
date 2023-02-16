@@ -14,3 +14,16 @@ export interface GeneralRequest {
   query: object
   path: object
 }
+
+export interface RegisterInterface {
+  fullName: string
+  email: string
+  password: string
+  retypePassword: string
+}
+
+export interface LoginInterface {
+  email: string
+  password: string
+  remember: boolean
+}
