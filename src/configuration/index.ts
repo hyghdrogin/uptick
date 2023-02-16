@@ -6,6 +6,7 @@ const config = {
   PORT: process.env.PORT,
   APP_NAME: process.env.APP_NAME,
   MONGO_URL: process.env.MONGO_URL as string,
+  JWT: process.env.JWT_KEY as string,
 };
 
 const incompleteEntry = Object.entries(config)

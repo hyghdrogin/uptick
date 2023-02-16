@@ -1,14 +1,23 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-namespace */
 import express from "express";
 import cors from "cors";
 import config from "./configuration";
 import requestLogger from "./utilities/requestLogger";
 import database from "./configuration/databaseConfiguration";
+import { GeneralRequest } from "./utilities/interfaces";
 
 const app = express();
 const port = config.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+declare global {
+  namespace Express {
+    interface Request extends GeneralRequest { }
+  }
+}
 
 app.use(requestLogger);
 
