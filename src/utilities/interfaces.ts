@@ -15,19 +15,6 @@ export interface GeneralRequest {
   path: object
 }
 
-export interface RegisterInterface {
-  fullName: string
-  email: string
-  password: string
-  retypePassword: string
-}
-
-export interface LoginInterface {
-  email: string
-  password: string
-  remember: boolean
-}
-
 export interface NoteUpdateInterface {
   heading?: string
   noteField: string

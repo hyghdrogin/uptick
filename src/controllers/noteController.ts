@@ -24,7 +24,7 @@ export default class NoteController {
       if (!user) {
         return errorResponse(res, 404, "User not found, kindly register an account");
       }
-      const note = await models.Note.create<NoteInterface>({ owner: user.userName, heading, noteField });
+      const note: NoteInterface = await models.Note.create({ owner: user.userName, heading, noteField });
       return successResponse(res, 201, "Note created successfully", { note });
     } catch (error) {
       handleError(error, req);
@@ -67,28 +67,20 @@ export default class NoteController {
   static async getAllNotes(req: Request, res: Response) {
     try {
       const { _id } = req.user;
-      let { page, limit }: any = req.query;
       const user = await models.User.findById({ _id });
-      if (page === undefined || null || String()) {
-        page = 1;
-      }
-      if (limit === undefined || null || String()) {
-        limit = 5;
-      }
-      const beginning = (page - 1) * limit;
-      const ending = page * limit;
-      const notes = await models.Note.find({ owner: user?.userName })
-        .limit(ending)
-        .skip(beginning)
-        .exec();
-      if (notes.length < 1) {
-        return errorResponse(res, 404, "You have no notes available, kindly create one");
-      }
-      const count = notes.length;
-      let totalPage = Math.floor(count / limit);
-      if (totalPage === 0) { totalPage = 1; }
+      const PAGE_SIZE = 10;
+      const pageNumber = parseInt(req.query.page as string, 10) || 1;
+      const offset = (pageNumber - 1) * PAGE_SIZE;
+
+      const notes = await models.Note.find({ owner: user?.userName }).skip(offset).limit(PAGE_SIZE);
+      const count = await models.Note.find({ owner: user?.userName }).countDocuments();
+
+      const totalPages = Math.ceil(count / PAGE_SIZE);
       return successResponse(res, 201, "Note fetched successfully", {
-        totalNotes: count, totalPage, currentPage: page, notes
+        notes,
+        count,
+        totalPages,
+        currentPage: pageNumber
       });
     } catch (error) {
       handleError(error, req);
@@ -105,7 +97,7 @@ export default class NoteController {
     try {
       const { _id } = req.user;
       const { noteId } = req.params;
-      const { heading, noteField }: NoteUpdateInterface = req.body;
+      const { heading, noteField } = req.body;
       const user = await models.User.findById({ _id });
       const note = await models.Note.findById({ _id: noteId });
       if (note?.owner !== user?.userName) {

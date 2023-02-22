@@ -18,7 +18,7 @@ export default class Authentication {
       }
       const headerSplit = authenticationHeader.split(" ");
       if (/^Bearer$/i.test(headerSplit[0])) {
-        const decodeToken: any = await jwt.verify(headerSplit[1], config.JWT);
+        const decodeToken = jwt.verify(headerSplit[1], config.JWT) as { _id: string };
         const user = await models.User.findById(decodeToken._id);
         if (!user) {
           return errorResponse(res, 404, "User not found");
@@ -27,8 +27,8 @@ export default class Authentication {
         return next();
       }
       return errorResponse(res, 401, "Invvalid Authentication format");
-    } catch (error: any) {
-      return errorResponse(res, 500, error.message);
+    } catch (error) {
+      return errorResponse(res, 500, "Server Error");
     }
   }
 }

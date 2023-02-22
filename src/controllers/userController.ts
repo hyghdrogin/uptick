@@ -4,9 +4,7 @@ import jwt from "jsonwebtoken";
 import models from "../models";
 import config from "../configuration";
 import { errorResponse, successResponse, handleError } from "../utilities/responses";
-import {
-  UserInterface, RegisterInterface, LoginInterface
-} from "../utilities/interfaces";
+import { UserInterface } from "../utilities/interfaces";
 
 /**
  * @class UserController
@@ -23,7 +21,7 @@ export default class UserController {
     try {
       const {
         email, password, retypePassword
-      }: RegisterInterface = req.body;
+      } = req.body;
       const user = await models.User.findOne({ email });
       if (user) {
         return errorResponse(res, 409, "User already exists, Kindly login");
@@ -33,10 +31,10 @@ export default class UserController {
         return errorResponse(res, 400, "Password does not match");
       }
       const encryptedPassword = await bcrypt.hash(password, 10);
-      await models.User.create<UserInterface>({
+      const userDetails: UserInterface = await models.User.create({
         userName, email, password: encryptedPassword
       });
-      return successResponse(res, 201, "User created successfully, login");
+      return successResponse(res, 201, "User created successfully, login", { userDetails });
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error");
@@ -50,7 +48,7 @@ export default class UserController {
    */
   static async userLogin(req: Request, res: Response) {
     try {
-      const { email, password, remember }: LoginInterface = req.body;
+      const { email, password, remember } = req.body;
       const user = await models.User.findOne({
         $or: [{
           email
